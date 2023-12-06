@@ -9,11 +9,13 @@ def init():
     response.raise_for_status()
 
 
-def reserve():
-    response = session.post(
-        "http://127.0.0.1:8083/reserve", json={"train_id": train_id, "count": 4}
-    )
-    assert response.status_code == 200, response.text
+def reserve(number = 1):
+    
+    for nombre in range(number):
+        response = session.post(
+            "http://127.0.0.1:8083/reserve", json={"train_id": train_id, "count": 4}
+        )
+        assert response.status_code == 200, response.text
     
     return response
     
@@ -30,8 +32,7 @@ def test_reserve_seats_from_empty_train():
 def test_reserve_four_additional_seats():
 
     init()
-    reserve()
-    reservation = reserve().json()
+    reservation = reserve(2).json()
     assert reservation["train_id"] == train_id
     assert len(reservation["seats"]) == 4
     assert reservation["seats"] == ["5A", "6A", "7A", "8A"]
