@@ -13,7 +13,7 @@ def init(number = 1):
 
 def reserve(number = 1):
     
-    for nombre in range(number):
+    for _ in range(number):
         response = session.post(
             "http://127.0.0.1:8083/reserve", json={"train_id": train_id, "count": 4}
         )
